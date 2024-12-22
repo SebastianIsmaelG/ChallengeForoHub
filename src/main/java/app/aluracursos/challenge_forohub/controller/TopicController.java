@@ -35,14 +35,13 @@ public class TopicController {
     private ResponsesRepository responsesRepository;
 
     @Autowired
-    private TopicResponse validar;
+    private TopicResponse topicResponse;
 
     @PostMapping
-    public ResponseEntity<DataConfirmTopic> enviarNuevoTopico(@RequestBody @Valid DataNewTopic dataNewTopic,
-                                                              UriComponentsBuilder uriComponentsBuilder){
-        DataConfirmTopic datosConfirmacion = validar.postearTopico(dataNewTopic);
-        URI url = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(datosConfirmacion.id()).toUri();
-        return ResponseEntity.created(url).body(datosConfirmacion);
+    public ResponseEntity<DataConfirmTopic> enviarNuevoTopico(@RequestBody @Valid DataNewTopic dataNewTopic, UriComponentsBuilder uriComponentsBuilder){
+        DataConfirmTopic dataConfirmTopic = topicResponse.postearTopico(dataNewTopic);
+        URI url = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(dataConfirmTopic.id()).toUri();
+        return ResponseEntity.created(url).body(dataConfirmTopic);
     }
 
     @GetMapping
@@ -56,20 +55,20 @@ public class TopicController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DataConfirmTopic> actualizarTopico(@PathVariable("id") Long id, @RequestBody @Valid DataUpdateTopic datosActualizar){
-        DataConfirmTopic datosActualizados = validar.actualizarTopico(id, datosActualizar);
+        DataConfirmTopic datosActualizados = topicResponse.actualizarTopico(id, datosActualizar);
         return ResponseEntity.ok(datosActualizados);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarTopico(@PathVariable Long id){
-        validar.eliminarTopico(id);
+        topicResponse.eliminarTopico(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/topicoPorId/{id}")
     public ResponseEntity<DataTopic> buscarTopicoPorId(@PathVariable Long id){
-        return ResponseEntity.ok(validar.topicoPorId(id));
+        return ResponseEntity.ok(topicResponse.topicoPorId(id));
     }
 
     @PostMapping("/buscar")

@@ -24,13 +24,9 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String titulo;
-
     private String mensaje;
-
     private LocalDateTime fechaDeCreacion;
-
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)

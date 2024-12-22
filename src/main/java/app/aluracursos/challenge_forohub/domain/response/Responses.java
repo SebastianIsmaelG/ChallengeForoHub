@@ -43,10 +43,10 @@ public class Responses {
     private Boolean solucion;
 
     public Responses(@Valid DataResponse datos, UserRepository uRepository, TopicRepository tRepository) {
-        this.user = uRepository.findById(datos.usuarioId())
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con el ID: " + datos.usuarioId()));
-        this.topic = tRepository.findById(datos.topicoId())
-                .orElseThrow(() -> new IllegalArgumentException("Topico no encontrado con el ID: " + datos.topicoId()));
+
+        this.user = uRepository.findById(datos.usuarioId()).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con el ID: " + datos.usuarioId()));
+
+        this.topic = tRepository.findById(datos.topicoId()).orElseThrow(() -> new IllegalArgumentException("Topico no encontrado con el ID: " + datos.topicoId()));
 
         this.nombre = uRepository.getReferenceById(datos.usuarioId()).getNombre();
 
